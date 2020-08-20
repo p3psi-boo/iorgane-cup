@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:id="@+id/search_card"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="90.0dip"
+        android:layout_marginLeft="25.0dip">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="40.0dip"
+            android:layout_height="69.31998dip"
+            android:layout_marginTop="2.0dip"
+            android:src="@drawable/icon_pic"
+            android:scaleType="centerInside" />
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25.0dip"
+            android:layout_marginBottom="2.0dip">
+            <TextView android:textSize="18.0sp"
+                android:textColor="@color/text"
+                android:id="@+id/cupMacAddr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OrangeCup" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3.0dip">
+                <TextView
+                    android:textSize="18.0sp"
+                    android:textColor="@color/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+                <TextView
+                    android:textSize="18.0sp"
+                    android:textColor="@color/text"
+                    android:id="@+id/cupSerial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
