@@ -1,6 +1,8 @@
 # iorgane Cup
 
-由于水杯坏了，**开发暂停**。
+由于水杯坏了，**开发暂停**
+
+小玩具在 [Release](https://github.com/p3psi-boo/iorgane-cup/releases/tag/0.0.1) 下载
 
 已经实现的功能：
 - 获取信息
