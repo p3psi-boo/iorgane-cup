@@ -63,12 +63,17 @@ public class SearchCup extends AppCompatActivity {
     private List<RxBleDevice> cupList;
     private List<byte[]> cupRecordList;
 
+    private Toolbar toolbar;
+
     private BluetoothGattCharacteristic bluetoothGattCharacteristic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_cup);
+
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("点击右下角按钮开始扫描");
 
         this.rxBleClient =  MainApplication.rxBleClient;
 
@@ -80,6 +85,7 @@ public class SearchCup extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
 
         mAdapter.setOnItemClickListener( new SearchViewAdapter.OnItemClickListener() {
             @Override
@@ -118,11 +124,12 @@ public class SearchCup extends AppCompatActivity {
                         if (!cupRecordList.contains(scanResult.getScanRecord().getBytes())) {
                             cupRecordList.add(scanResult.getScanRecord().getBytes());
                         }
+                        mAdapter.notifyDataSetChanged();
                     }
-                    mAdapter.notifyDataSetChanged();
                 },
                 throwable -> {
                     Log.e(TAG, "startBLESearch: ", throwable);
+                    Toast.makeText(this, "开启蓝牙后再进行操作", Toast.LENGTH_SHORT);
                 }
         );
     }

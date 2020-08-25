@@ -33,33 +33,31 @@
                     android:scaleType="centerInside" />
 
                 <LinearLayout
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/temp_status"
+                        android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="temp" />
+                        android:text="温度: " />
 
                     <TextView
                         android:id="@+id/battery_status"
+                        android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Battery" />
-
-                    <TextView
-                        android:id="@+id/link_status"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Link Status" />
+                        android:text="电量: " />
 
                     <TextView
                         android:id="@+id/volume_status"
+                        android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Volume" />
+                        android:text="水量: " />
                 </LinearLayout>
 
             </LinearLayout>
@@ -94,6 +92,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="更新时间" />
+
+            <Button
+                android:id="@+id/set_drink_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="设置饮水量（测试）" />
         </LinearLayout>
 
     </LinearLayout>

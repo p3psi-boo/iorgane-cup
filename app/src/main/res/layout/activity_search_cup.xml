@@ -29,6 +29,14 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="正常工作需打开位置信息以及蓝牙"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/scan_devices_recycler_view"
             android:layout_width="match_parent"
@@ -45,6 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/ic_bt" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

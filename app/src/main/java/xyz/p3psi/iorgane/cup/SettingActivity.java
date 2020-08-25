@@ -11,10 +11,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rx.ReplayingShare;
 import com.polidea.rxandroidble2.RxBleConnection;
 import com.polidea.rxandroidble2.RxBleDevice;
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog;
 
 
 import org.w3c.dom.Text;
@@ -34,7 +36,6 @@ public class SettingActivity extends AppCompatActivity {
 
     final static String TAG = "SettingActivity";
 
-    TextView linkTextView;
     TextView tempTextView;
     TextView batTextView;
     TextView volTextView;
@@ -42,6 +43,7 @@ public class SettingActivity extends AppCompatActivity {
     Button adjustCupButton;
     Button updateInfoButton;
     Button connectButton;
+    Button setDrinkButton;
 
     RxBleDevice rxBleDevice;
 
@@ -77,18 +79,16 @@ public class SettingActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 if (msg.arg1 == 1) {
                     WaterInfo waterInfo = (WaterInfo) msg.obj;
-                    batTextView.setText(waterInfo.batter);
-                    tempTextView.setText(waterInfo.temp);
-                    volTextView.setText(waterInfo.ml);
+                    batTextView.setText("电量: " + waterInfo.batter);
+                    tempTextView.setText("温度: " + waterInfo.temp);
+                    volTextView.setText("水量: " + waterInfo.ml);
                 }
             }
         };
 
-        linkTextView = (TextView) findViewById(R.id.link_status);
         tempTextView = (TextView) findViewById(R.id.temp_status);
         batTextView = (TextView) findViewById(R.id.battery_status);
         volTextView = (TextView) findViewById(R.id.volume_status);
-
 
         updateInfoButton = (Button) findViewById(R.id.get_info_btn);
         updateInfoButton.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +178,43 @@ public class SettingActivity extends AppCompatActivity {
                                     throwable -> Log.e(TAG, "onClick: ", throwable)
                             );
                 }
+            }
+        });
+
+        setDrinkButton = (Button) findViewById(R.id.set_drink_btn);
+        setDrinkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new LovelyTextInputDialog(SettingActivity.this, R.style.EditTextTintTheme)
+                        .setTopColorRes(R.color.colorAccent)
+                        .setTitle("设置饮水量")
+                        .setInputFilter("不合法输入", new LovelyTextInputDialog.TextFilter() {
+                            @Override
+                            public boolean check(String text) {
+                                return text.matches("^[0-9]*$");
+                            }
+                        })
+                        .setConfirmButton(android.R.string.ok, new LovelyTextInputDialog.OnTextInputConfirmListener() {
+                            @Override
+                            public void onTextInputConfirmed(String text) {
+                                if (isConnected()) {
+                                    byte[] data = new byte[4];
+                                    data[0] = 83;
+                                    data[1] = 73;
+                                    Utils.wordToBytes(Integer.parseInt(text), data, 2);
+                                    final Disposable disposable = connectionObservable
+                                            .firstOrError()
+                                            .flatMap(rxBleConnection -> rxBleConnection.writeCharacteristic(Constant.UUID_KEY_DATA_NEW_W, data))
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(
+                                                    bytes -> Toast.makeText(SettingActivity.this, "发送指令成功", Toast.LENGTH_SHORT).show(),
+                                                    throwable -> Log.e(TAG, "onClick: ", throwable)
+                                            );
+                                    compositeDisposable.add(disposable);
+                                }
+                            }
+                        })
+                        .show();
             }
         });
     }
